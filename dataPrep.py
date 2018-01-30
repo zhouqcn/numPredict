@@ -28,7 +28,9 @@ df_noaa['DATE'] = pd.to_datetime(df_noaa.DATE).dt.strftime('%m/%d/%Y')
 df_all = pd.merge(left=df_noaa, right=df_dateCount, how='left', left_on='DATE', right_on='QHSJ')
 df_all['DATE'] = pd.to_datetime(df_all['DATE'])
 df_all = df_all[(df_all['DATE'] > datetime.date(2007, 1, 1)) & (df_all['DATE'] < datetime.date(2017, 10, 16))]
+df_all.fillna(0, inplace=True)
 
+df_all.to_csv('./data_all.csv')
 
 
 
