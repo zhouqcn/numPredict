@@ -24,15 +24,25 @@ df_noaa = pd.read_csv("../data/noaa_climate.csv", usecols=[5, 6, 10])
 df_noaa.fillna(0, inplace=True)
 df_noaa['DATE'] = pd.to_datetime(df_noaa.DATE).dt.strftime('%m/%d/%Y')
 
-# merge climate date to fire count
+# Merge climate date to fire count
 df_all = pd.merge(left=df_noaa, right=df_dateCount, how='left', left_on='DATE', right_on='QHSJ')
 df_all['DATE'] = pd.to_datetime(df_all['DATE'])
 df_all = df_all[(df_all['DATE'] > datetime.date(2007, 1, 1)) & (df_all['DATE'] < datetime.date(2017, 10, 16))]
 df_all.fillna(0, inplace=True)
 
-df_all.to_csv('./data_all.csv')
+# Save train and test data file
+df_train = df_all[(df_all['DATE'] > datetime.date(2007, 1, 1)) & (df_all['DATE'] < datetime.date(2016, 12, 31))]
+df_train.to_csv('./data_train.csv')
+df_test = df_all[(df_all['DATE'] > datetime.date(2016, 12, 31)) & (df_all['DATE'] < datetime.date(2017, 10, 16))]
+df_test.to_csv('./data_test.csv')
 
-
+# Visualize the data
+plt.figure(1)
+plt.subplot(211)
+plt.plot(df_train['DATE'], df_train['count'])
+plt.subplot(212)
+plt.plot(df_test['DATE'], df_test['count'])
+plt.show()
 
 print(df_all)
 
