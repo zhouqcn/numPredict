@@ -7,9 +7,9 @@ import random
 import time
 import datetime
 
-file_raw = "../data/raw.csv"
-file_firenj = "../data/FireNJ_address.csv"
-file_climate = "../data/noaa_climate.csv"
+file_raw = "./data/raw.csv"
+file_firenj = "./data/FireNJ_address.csv"
+file_climate = "./data/noaa_climate.csv"
 testSetRatio = 0.1
 
 df_raw = pd.read_csv(file_raw, usecols=[1, 2])
